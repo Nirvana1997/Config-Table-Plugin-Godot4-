@@ -13,7 +13,7 @@ func _get_data_table():
 {DATA_LIST}	]
 
 func by(field_name, v) -> DataType:
-	return ._by(field_name, v) as DataType
+	return self._by(field_name, v) as DataType
 
 func _get_data_head_def():
 	return [
