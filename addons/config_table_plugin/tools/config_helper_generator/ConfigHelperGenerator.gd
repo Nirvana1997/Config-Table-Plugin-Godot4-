@@ -1,4 +1,4 @@
-extends Reference
+extends RefCounted
 
 var template_path:String
 
@@ -21,7 +21,7 @@ func create(config_table_path_list:Array):
 	gen_code(gen_map)
 
 func gen_decription():
-	var date:String = '{year}-{month}-{day} {hour}:{minute}:{second}'.format(OS.get_datetime())
+	var date:String = '{year}-{month}-{day} {hour}:{minute}:{second}'.format(Time.get_datetime_string_from_system())
 	var empty_str = '                                    '
 	var left_pad = floor((empty_str.length() - date.length()) / 2)
 	var right_pad = ceil((empty_str.length() - date.length()) / 2)

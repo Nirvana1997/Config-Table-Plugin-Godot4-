@@ -1,4 +1,4 @@
-tool
+@tool
 extends EditorPlugin
 
 const ROOT_DIR_SETTING := 'config_table_plugin/root_directory'
@@ -83,7 +83,7 @@ func create_tool_menu():
 	tool_menu = PopupMenu.new()
 	add_tool_submenu_item(TOOL_MENU_NAME, tool_menu)
 	
-	tool_menu.connect('id_pressed', self, '_on_tool_menu_pressed')
+	tool_menu.connect('id_pressed', self._on_tool_menu_pressed)
 	
 	tool_menu.add_item(EXPORT_ALL_EXCELS_MENU_NAME, EXPORT_ALL_EXCELS_MENU_ID)
 	tool_menu.add_item(EXPORT_ALL_GDSCRIPTS_MENU_NAME, EXPORT_ALL_GDSCRIPTS_MENU_ID)
@@ -182,13 +182,13 @@ func execute_gdscript_config_table_tool(args:=[], show_output:=false):
 	var e = path_combine(get_current_workdirectory(), GDSCRIPT_CONFIG_TABLE_TOOL_PATH)
 	e = ProjectSettings.globalize_path(e)
 	var output := []
-	var code = OS.execute(e, args, true, output, true)
+	var code = OS.execute(e, args, output, true)
 	if code != 0:
 		printerr('Execute the gdscript config table tool failed: %s' % e)
 		printerr('Code: %s' % code)
 		printerr('Output: %s' % [output])
 	else:
-		if show_output and not output.empty():
+		if show_output and not output.is_empty():
 			if output.size() != 1 or output[0] != '':
 				print(output)
 	get_editor_interface().get_resource_filesystem().scan()
@@ -205,7 +205,7 @@ func get_config_table_path_list():
 	if err != OK:
 		printerr('Can\'t access config tables dir: %s, code: %s' % [config_tables_dir, err])
 		return []
-	err = dir.list_dir_begin(true, true)
+	err = dir.list_dir_begin()
 	if err != OK:
 		printerr('Can\'t list dir begin at: %s, code: %s' % [config_tables_dir, err])
 		return []
@@ -262,7 +262,7 @@ func clean_all_config_tables(scan:=true, with_config_helper:=true):
 	if err != OK:
 		printerr('Can\'t open config tables directory: %s, code: %s' % [config_tables_dir, err])
 		return
-	err = dir.list_dir_begin(true, true)
+	err = dir.list_dir_begin()
 	if err != OK:
 		printerr('Can\'t list dir begin of: %s, code: %s' % [config_tables_dir, err])
 		return
